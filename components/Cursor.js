@@ -92,7 +92,7 @@ export default function Cursor() {
   });
 
   // Only render if we're on the client-side
-  if (!isClient) return null;
+  if (!isClient && typeof window !== "undefined" && typeof window !== undefined) return null;
 
   return (
     <>
