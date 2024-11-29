@@ -71,7 +71,7 @@ export default function Home() {
     const textRef = useRef(null);
 
     useEffect(() => {
-        if (typeof window !== "undefined") {
+        if (typeof window !== "undefined" && typeof window !== undefined) {
           const textSpans = textRef.current.querySelectorAll("span");
     
           const handleMouseMove = (event) => {

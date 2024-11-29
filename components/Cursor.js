@@ -36,7 +36,7 @@ export default function Cursor() {
 
   useEffect(() => {
     // Check if we are running on the client side
-    if (typeof window !== "undefined") {
+    if (typeof window !== "undefined" && typeof window !== undefined) {
       setIsClient(true); // Set the state when we know we're on the client-side
 
       const handleMouseMove = (event) => {
