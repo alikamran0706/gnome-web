@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Slab:wght@100..900&display=swap');
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+/* globals.css */
+
+.poppins-regular {
+  font-family: 'Poppins', serif;
+  font-weight: 400; /* Regular weight */
+}
+
+.robotoslab-regular {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 400; /* Regular weight */
+}
+
+.poppins-bold {
+  font-family: 'Poppins', serif;
+  font-weight: 700; /* Bold weight */
+}
+
+.robotoslab-bold {
+  font-family: 'Roboto Slab', serif;
+  font-weight: 700; /* Bold weight */
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+/* Glowing animation for the light */
+/* Glowing effect animation */
+@keyframes glowing {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2); /* Increase size */
+    opacity: 1; /* Maximum opacity */
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+}
+
+/* Glowing effect applied to the border */
+.animate-glowing {
+  animation: glowing 3s infinite ease-in-out;
+}
+
+/* Optional: glowing effect for the light border */
+.yellow-light {
+  box-shadow: 0 0 15px rgba(255, 255, 0, 0.5); /* Glow effect */
+}
+
+/* Mirror effect (Reflection at the bottom) */
+.mirror-effect {
+  filter: blur(5px) brightness(0.8);
+  transform: scaleY(-1); /* Flip the image vertically */
+}
+
+
