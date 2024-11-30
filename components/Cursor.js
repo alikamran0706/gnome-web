@@ -7,7 +7,7 @@ import { gsap } from "gsap";
 const MirrorMaterial = shaderMaterial(
   {
     uTime: 0,
-    uResolution: [window.innerWidth, window.innerHeight],
+    uResolution: [1, 1], // Default resolution (will be updated later)
   },
   `varying vec2 vUv;
   void main() {
@@ -33,11 +33,23 @@ export default function Cursor() {
   const rotationRef = useRef(0);
 
   const [isClient, setIsClient] = useState(false); // Track whether the component is on the client side
+  const [resolution, setResolution] = useState([1, 1]); // Default resolution to be updated on the client
 
   useEffect(() => {
     // Check if we are running on the client side
-    if (typeof window !== "undefined" && typeof window !== undefined) {
+    if (typeof window !== "undefined") {
       setIsClient(true); // Set the state when we know we're on the client-side
+
+      // Update resolution on window resize
+      const updateResolution = () => {
+        setResolution([window.innerWidth, window.innerHeight]);
+      };
+
+      // Initialize resolution when the component mounts
+      updateResolution();
+
+      // Add resize event listener
+      window.addEventListener("resize", updateResolution);
 
       const handleMouseMove = (event) => {
         const { clientX: x, clientY: y } = event;
@@ -78,8 +90,11 @@ export default function Cursor() {
       };
 
       window.addEventListener("mousemove", handleMouseMove);
+
+      // Clean up listeners on component unmount
       return () => {
         window.removeEventListener("mousemove", handleMouseMove);
+        window.removeEventListener("resize", updateResolution);
       };
     }
   }, []); // The empty array ensures this effect runs once on mount
@@ -92,7 +107,7 @@ export default function Cursor() {
   });
 
   // Only render if we're on the client-side
-  if (!isClient && typeof window !== "undefined" && typeof window !== undefined) return null;
+  if (!isClient) return null;
 
   return (
     <>
@@ -103,11 +118,10 @@ export default function Cursor() {
         {isClient && (
           <mirrorMaterial
             attach="material"
-            uResolution={[window.innerWidth, window.innerHeight]}
+            uResolution={resolution} // Use the updated resolution
           />
         )}
       </mesh>
     </>
   );
 }
-
