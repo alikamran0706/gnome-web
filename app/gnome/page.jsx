@@ -7,7 +7,7 @@ import Link from "next/link";
 // Dynamically import the Model component
 const Model = dynamic(() => import("@/components/View"), {
   ssr: false, // Disable server-side rendering for this component
-  loading: () => <p>Loading 3D Model...</p>, // Optional loading state
+  loading: () => <p></p>, // Optional loading state
 });
 
 export default function Home() {
