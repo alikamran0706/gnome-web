@@ -45,11 +45,11 @@ export default function HomePage() {
     Costume2_Low: { visible: false },
     Costume3_Low: { visible: false },
     Costume4_Low: { visible: false },
-    Costume5_Low: { visible: true },
-    Red_C_Costume: { visible: false },
+    Costume5_Low: { visible: false },
+    Red_C_Costume: { visible: true },
     GnomeCostume1_Low: { visible: true },
     Beard1_low: { visible: false },
-    Beard2_low: { visible: true },
+    Beard2_low: { visible: false },
     Beard3_low: { visible: false },
     Beard4_low: { visible: false },
     Red_C_Beard: { visible: true },
@@ -58,10 +58,10 @@ export default function HomePage() {
     Hat2_low: { visible: false },
     Hat3_low: { visible: false },
     Hat4_low: { visible: false },
-    Hat5_low: { visible: true },
-    Red_C_Hat: { visible: false },
+    Hat5_low: { visible: false },
+    Red_C_Hat: { visible: true },
     Red_C_Body: { visible: true },
-    GnomeHatDefault_Low: { visible: true },
+    GnomeHatDefault_Low: { visible: false },
   });
 
   const changeCostumeHandler = (index) => {
@@ -237,7 +237,7 @@ export default function HomePage() {
         )}
       </div>
       <div className='w-1/2'>
-        <Canvas style={{ width: '100%', height: '100vh' }} camera={{ fov: 85 }} dpr={[1, 2]} shadows>
+        <Canvas style={{ width: '100%', height: '85.5vh' }} camera={{ fov: 85 }} dpr={[1, 2]} shadows>
           <Suspense fallback={null}>
             <ambientLight intensity={3.5} />
 
@@ -263,7 +263,7 @@ export default function HomePage() {
 }
 
 const Box = ({ meshConfig }) => {
-  const fbx = useLoader(FBXLoader, '/models/Chicken Dance.fbx');
+  const fbx = useLoader(FBXLoader, '/models/RatchetCostumesRigged.fbx');
   // const costume1Texture = useLoader(TextureLoader, '/models/Costumes_Low_Costume1Mat_AlbedoTransparency1.png');
   const mixer = useRef(null);
   const modelRef = useRef(null);
@@ -278,9 +278,9 @@ const Box = ({ meshConfig }) => {
   const costume4Texture = useLoader(TextureLoader, '/models/Costume4Mat_Base_color.png');
   const costume5Texture = useLoader(TextureLoader, '/models/Costume5Mat_Base_color.png');
 
-  const hatTexture = useLoader(TextureLoader, '/models/HatsAndBeardsMat_Base_color.png');
-  const hatMetallicTexture = useLoader(TextureLoader, '/models/HatsAndBeardsMat_Metallic.png');
-  const hatNormalTexture = useLoader(TextureLoader, '/models/HatsAndBeardsMat_Normal_OpenGL.png');
+  // const hatTexture = useLoader(TextureLoader, '/models/HatsAndBeardsMat_Base_color.png');
+  // const hatMetallicTexture = useLoader(TextureLoader, '/models/HatsAndBeardsMat_Metallic.png');
+  // const hatNormalTexture = useLoader(TextureLoader, '/models/HatsAndBeardsMat_Normal_OpenGL.png');
 
 
   useEffect(() => {
@@ -294,27 +294,27 @@ const Box = ({ meshConfig }) => {
             // Apply textures dynamically
             if (child.name === 'Costume1_Low') {
               // child.material.map = costume1Texture;
-              child.material.map = costume1BaseColor; // Base color texture
-              child.material.metalnessMap = costume1Metallic; // Metallic map
-              child.material.normalMap = costume1Normal; // Normal map
+              // child.material.map = costume1BaseColor; // Base color texture
+              // child.material.metalnessMap = costume1Metallic; // Metallic map
+              // child.material.normalMap = costume1Normal; // Normal map
               // child.material.roughnessMap = costume1Roughness; // Roughness map
 
             } else if (child.name === 'Costume2_Low') {
-              child.material.map = costume2Texture;
+              // child.material.map = costume2Texture;
             } else if (child.name === 'Costume3_Low') {
-              child.material.map = costume3Texture;
+              // child.material.map = costume3Texture;
             } else if (child.name === 'Costume4_Low') {
-              child.material.map = costume4Texture;
+              // child.material.map = costume4Texture;
             } else if (child.name === 'Costume5_Low') {
-              child.material.map = costume5Texture;
+              // child.material.map = costume5Texture;
             }
 
-            if (child.name.startsWith("Hat") || child.name.startsWith("Beard") || child.name === 'Red_C_Hat' 
-            ) {
-              child.material.map = hatTexture; 
-              child.material.metalnessMap = hatMetallicTexture; 
-              child.material.normalMap = hatNormalTexture; 
-            }
+            // if (child.name.startsWith("Hat") || child.name.startsWith("Beard") || child.name === 'Red_C_Hat' 
+            // ) {
+            //   child.material.map = hatTexture; 
+            //   child.material.metalnessMap = hatMetallicTexture; 
+            //   child.material.normalMap = hatNormalTexture; 
+            // }
             child.material.metalness = 1;
             child.material.roughness = 1;
             child.material.needsUpdate = true;
@@ -347,5 +347,5 @@ const Box = ({ meshConfig }) => {
       modelRef.current.rotation.y += 0.01; // Adjust rotation speed as needed
     }
   });
-  return <primitive  ref={modelRef} object={fbx} scale={[4, 4, 4]} position={[0, -2, 0]} />;
+  return <primitive  ref={modelRef} object={fbx} scale={[0.04, 0.04, 0.04]} position={[0, -2, 0]} />;
 };

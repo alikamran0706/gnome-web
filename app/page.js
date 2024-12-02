@@ -17,13 +17,13 @@ export default function Home() {
         {
             title: "Morpheus",
             description: "Creating immersive gaming experiences tailored for all platforms.",
-            link: "https://github.com/GnomeLabsLLC/MorpheusUnitySDK"
+            href: "https://github.com/GnomeLabsLLC/MorpheusUnitySDK"
         },
         {
             title: "Gnomeville",
             description:
                 "Experts in developing mixed reality games and experiences for Apple Vision Pro, Meta, Pico, and other XR hardware.",
-            link: "https://gnomeville.io"
+            link: "/gnome"
         },
     ];
 
@@ -72,49 +72,49 @@ export default function Home() {
 
     useEffect(() => {
         if (typeof window !== "undefined" && typeof window !== undefined) {
-          const textSpans = textRef.current.querySelectorAll("span");
-    
-          const handleMouseMove = (event) => {
-            const { clientX, clientY } = event;
-    
-            textSpans.forEach((span) => {
-              const spanRect = span.getBoundingClientRect();
-              const spanCenterX = spanRect.left + spanRect.width / 2;
-              const spanCenterY = spanRect.top + spanRect.height / 2;
-    
-              const distance = Math.sqrt(
-                Math.pow(clientX - spanCenterX, 2) + Math.pow(clientY - spanCenterY, 2)
-              );
-    
-              // Animate spans within a certain distance
-              if (distance < 100) {
-                gsap.to(span, {
-                  scale: 1.5,
-                  color: "#00f2ff",
-                  textShadow: "0px 0px 10px rgba(0, 242, 255, 0.8)",
-                  duration: 0.4,
-                  ease: "power3.out",
+            const textSpans = textRef.current.querySelectorAll("span");
+
+            const handleMouseMove = (event) => {
+                const { clientX, clientY } = event;
+
+                textSpans.forEach((span) => {
+                    const spanRect = span.getBoundingClientRect();
+                    const spanCenterX = spanRect.left + spanRect.width / 2;
+                    const spanCenterY = spanRect.top + spanRect.height / 2;
+
+                    const distance = Math.sqrt(
+                        Math.pow(clientX - spanCenterX, 2) + Math.pow(clientY - spanCenterY, 2)
+                    );
+
+                    // Animate spans within a certain distance
+                    if (distance < 100) {
+                        gsap.to(span, {
+                            scale: 1.5,
+                            color: "#00f2ff",
+                            textShadow: "0px 0px 10px rgba(0, 242, 255, 0.8)",
+                            duration: 0.4,
+                            ease: "power3.out",
+                        });
+                    } else {
+                        gsap.to(span, {
+                            scale: 1,
+                            color: "white",
+                            textShadow: "none",
+                            duration: 0.4,
+                            ease: "power3.out",
+                        });
+                    }
                 });
-              } else {
-                gsap.to(span, {
-                  scale: 1,
-                  color: "white",
-                  textShadow: "none",
-                  duration: 0.4,
-                  ease: "power3.out",
-                });
-              }
-            });
-          };
-    
-          window.addEventListener("mousemove", handleMouseMove);
-    
-          return () => {
-            window.removeEventListener("mousemove", handleMouseMove);
-          };
+            };
+
+            window.addEventListener("mousemove", handleMouseMove);
+
+            return () => {
+                window.removeEventListener("mousemove", handleMouseMove);
+            };
         }
-      }, []);
-    
+    }, []);
+
 
     return (
         <div className="font-sans relative">
@@ -128,11 +128,11 @@ export default function Home() {
                     </div>
                     {/* About Us Button */}
                     <Link
-                            href="/about-us"
-                            className="text-xl absolute top-6 right-6 cursor-pointer text-gray-300 font-bold py-2 px-6 bg-transparent hover:text-[#6ee7b7] hover:underline transition-all duration-300"
-                        >
-                            About Us
-                        </Link>
+                        href="/about-us"
+                        className="text-xl absolute top-6 right-6 cursor-pointer text-gray-300 font-bold py-2 px-6 bg-transparent hover:text-[#6ee7b7] hover:underline transition-all duration-300"
+                    >
+                        About Us
+                    </Link>
                 </div>
                 {/* Main Content */}
                 <div className="text-center">
@@ -168,16 +168,11 @@ export default function Home() {
                 {/* Collapsible Section */}
                 <div className="min-h-screen flex p-14">
                     <div className="w-full mx-auto space-y-4">
-                        {sections.map((section, index) => (
-                            <a
-                                key={index}
-                                href={section.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="block"
-                            >
+                        {sections.map((section, index) => {
+                            const isInternalLink = section.link && section.link.startsWith('/');
+
+                            const linkContent = (
                                 <div
-                                    key={index}
                                     ref={(el) => (collapseRef.current[index] = el)}
                                     className="border-t border-gray-300 overflow-hidden cursor-pointer"
                                     onMouseEnter={() => handleMouseEnter(index)}
@@ -200,8 +195,24 @@ export default function Home() {
                                         {section.description}
                                     </p>
                                 </div>
-                            </a>
-                        ))}
+                            );
+
+                            return isInternalLink ? (
+                                <Link key={index} href={section.link}>
+                                    {linkContent}
+                                </Link>
+                            ) : (
+                                <a
+                                    key={index}
+                                    href={section.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="block"
+                                >
+                                    {linkContent}
+                                </a>
+                            );
+                        })}
                     </div>
                 </div>
             </div>
@@ -245,7 +256,7 @@ export default function Home() {
                         </a>
                     </div>
 
-                  
+
                     <p className="text-sm text-gray-400">
                         Copyright &copy; {new Date().getFullYear()} Gnome Labs LLC. All rights reserved.
                     </p>

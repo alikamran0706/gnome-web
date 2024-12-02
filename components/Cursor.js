@@ -62,8 +62,8 @@ export default function Cursor() {
         const normalizedY = -(y / window.innerHeight) * 2 + 1;
 
         // Adjust for aspect ratio
-        const worldX = normalizedX * aspectRatio * 5;
-        const worldY = normalizedY * 5;
+        const worldX = normalizedX * aspectRatio * 4.5;
+        const worldY = normalizedY * 4.5;
 
         // Determine target rotation
         const halfwayX = 0; // X = 0 is the center
