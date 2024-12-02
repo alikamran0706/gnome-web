@@ -117,31 +117,21 @@ export default function HomePage() {
       return updatedConfig;
     });
   };
-
-  const changeItemHandler = (index, type) => {
-    setSelectedShape(index - 1);
-    setMeshConfig((prevConfig) => {
-      const updatedConfig = { ...prevConfig };
-      Object.keys(updatedConfig).forEach((key) => {
-        if (key.startsWith(type) || key === `Red_C_${type}`) {
-          updatedConfig[key].visible = false;
-        }
-      });
-      updatedConfig[`${type}${index}_Low`].visible = true;
-      return updatedConfig;
-    });
-  };
   const animateItems = (items) => {
+    // Clear any existing animations
     if (timeline.current) timeline.current.kill();
+
+    // Create a new timeline for the animation
     timeline.current = gsap.timeline();
+
     timeline.current.fromTo(
       items,
-      { x: -100, opacity: 0 }, 
+      { x: -100, opacity: 0 }, // Starting state
       {
         x: 0,
         opacity: 1,
         duration: 0.7,
-        stagger: 0.2, 
+        stagger: 0.2, // Staggered animation for each item
         ease: "power3.out",
       }
     );
@@ -157,56 +147,97 @@ export default function HomePage() {
     }
   }, [selectedTab]);
   return (
-    <div className="flex flex-col lg:flex-row lg:justify-between w-full">
-      <div className="w-full lg:w-1/2 flex flex-col gap-y-8 px-4 lg:px-12 mt-8 lg:mt-24">
-        <div className="flex mb-4 overflow-x-auto flex-wrap gap-x-4">
+    <div className='flex justify-between'>
+      <div className='w-1/2 flex flex-col gap-y-8 ml-12 space-x-4 mt-24'>
+        <div className="flex mb-4 overflow-x-auto">
           {tabs.map((tab) => (
             <button
               key={tab.id}
-              className={`flex flex-col items-center px-2 py-1 lg:px-4 lg:py-2 ${selectedTab === tab.id ? 'text-blue-500 font-bold' : 'text-gray-400'
+              className={`flex flex-col items-center justify-center px-4 py-2 ${selectedTab === tab.id ? "text-blue-500 font-bold" : "text-gray-400"
                 }`}
               onClick={() => {
-                setSelectedShape(null);
-                setSelectedTab(tab.id);
-              }}
+                setSelectedShape(null)
+                setSelectedTab(tab.id)
+              }
+              }
             >
-              <div className="text-base lg:text-xl">{tab.icon}</div>
-              <span className="text-xs lg:text-sm">{tab.id}</span>
+              <div className="text-2xl">{tab.icon}</div>
+              <span className="text-sm">{tab.id}</span>
             </button>
           ))}
         </div>
-
-        {selectedTab === 'Cap' ? (
-          <Category
-            title="Cap"
-            items={capIcons}
-            refs={capRef}
-            onClick={(i) => changeGapHandler(i + 1)}
-
-
-            selectedShape={selectedShape}
-          />
-        ) : selectedTab === 'Clothes' ? (
-          <Category
-            title="Costume"
-            items={costumeIcons}
-            refs={costumeRef}
-            onClick={(i) => changeCostumeHandler(i + 1)}
-            selectedShape={selectedShape}
-          />
+        {selectedTab === "Cap" ? (
+          <div>
+            <div className="text-gray-200 font-semibold text-xl mb-5">Cap</div>
+            <div className="rounded-full text-center p-2 gap-x-4 flex">
+              {capIcons.map((icon, i) => (
+                <div
+                  key={i}
+                  className={`rounded-full bg-white ${selectedShape === i ? 'shadow-indigo-500/50 border-2 border-indigo-600 h-28 w-28 scale-110' : 'h-24 w-24 scale-100'} flex items-center justify-center cursor-pointer textures`}
+                  ref={(el) => (capRef.current[i] = el)} // Attach ref for GSAP
+                  onClick={() => changeGapHandler(i + 1)}
+                >
+                  <Image
+                    src={icon}
+                    alt={`Cap ${i + 1}`}
+                    width={64}
+                    height={64}
+                    className="rounded-full"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        ) : selectedTab === "Clothes" ? (
+          <div>
+            <div className="text-gray-200 font-semibold text-xl mb-5">
+              Costume
+            </div>
+            <div className="rounded-full text-center p-2 gap-x-4 flex items-center">
+              {costumeIcons.map((icon, i) => (
+                <div
+                  key={i}
+                  className={`rounded-full bg-white ${selectedShape === i ? 'shadow-indigo-500/50 border-2 border-indigo-600 h-28 w-28 scale-110' : 'h-24 w-24 scale-100'} flex items-center justify-center cursor-pointer textures`}
+                  ref={(el) => (costumeRef.current[i] = el)} // Attach ref for GSAP
+                  onClick={() => changeCostumeHandler(i + 1)}
+                >
+                  <Image
+                    src={icon}
+                    alt={`Costume ${i + 1}`}
+                    width={55}
+                    height={55}
+                    className="rounded-full"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
         ) : (
-          <Category
-            title="Beard"
-            items={beardIcons}
-            refs={beardRef}
-            onClick={(i) => changeBeardHandler(i + 1)}
-            selectedShape={selectedShape}
-          />
+          <div>
+            <div className="text-gray-200 font-semibold text-xl mb-5">Beard</div>
+            <div className="rounded-full text-center p-2 gap-x-4 flex">
+              {beardIcons.map((icon, i) => (
+                <div
+                  key={i}
+                  className={`rounded-full bg-white ${selectedShape === i ? 'shadow-indigo-500/50 border-2 border-indigo-600 h-28 w-28 scale-110' : 'h-24 w-24 scale-100'} flex items-center justify-center cursor-pointer textures`}
+                  ref={(el) => (beardRef.current[i] = el)} // Attach ref for GSAP
+                  onClick={() => changeBeardHandler(i + 1)}
+                >
+                  <Image
+                    src={icon}
+                    alt={`Beard ${i + 1}`}
+                    width={50}
+                    height={50}
+                    className="rounded-full"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
         )}
       </div>
-
-      <div className="w-full lg:w-1/2 h-[90vh] flex items-center justify-center">
-        <Canvas style={{ width: '100%', height: '85.5vh' }} camera={{ fov: 85 }} dpr={[1, 2]} shadows>
+      <div className='w-1/2'>
+        <Canvas style={{ width: '100%', height: '90vh' }} camera={{ fov: 85 }} dpr={[1, 2]} shadows>
           <Suspense fallback={null}>
             <ambientLight intensity={3.5} />
 
@@ -231,33 +262,12 @@ export default function HomePage() {
   );
 }
 
-const Category = ({ title, items, refs, onClick, selectedShape }) => (
-  <div>
-    <div className="text-gray-200 font-semibold text-xl mb-5">{title}</div>
-    <div className="rounded-full text-center p-2 gap-x-4 flex flex-wrap">
-      {items.map((icon, i) => (
-        <div
-          key={i}
-          className={`rounded-full bg-white ${selectedShape === i
-              ? "shadow-indigo-500/50 border-2 border-indigo-600 h-28 w-28 scale-110"
-              : "h-24 w-24 scale-100"
-            } flex items-center justify-center cursor-pointer`}
-          ref={(el) => (refs.current[i] = el)}
-          onClick={() => onClick(i)}
-        >
-          <Image src={icon} alt={`${title} ${i + 1}`} width={64} height={64} className="rounded-full" />
-        </div>
-      ))}
-    </div>
-  </div>
-);
-
 const Box = ({ meshConfig }) => {
   const fbx = useLoader(FBXLoader, '/models/RatchetCostumesRigged.fbx');
   // const costume1Texture = useLoader(TextureLoader, '/models/Costumes_Low_Costume1Mat_AlbedoTransparency1.png');
   const mixer = useRef(null);
   const modelRef = useRef(null);
-
+  
   const costume1BaseColor = useLoader(TextureLoader, '/models/Costume1Mat_Base_color.png');
   const costume1Metallic = useLoader(TextureLoader, '/models/Costume1Mat_Metallic.png');
   const costume1Normal = useLoader(TextureLoader, '/models/Costume1Mat_Normal_OpenGL.png');
@@ -313,7 +323,7 @@ const Box = ({ meshConfig }) => {
       });
     }
   }, [fbx, meshConfig, costume1BaseColor, costume2Texture, costume3Texture, costume4Texture, costume5Texture]);
-
+  
   useEffect(() => {
     if (fbx) {
       if (fbx.animations && fbx.animations.length > 0) {
@@ -334,9 +344,8 @@ const Box = ({ meshConfig }) => {
     }
 
     if (modelRef.current) {
-      modelRef.current.rotation.y += 0.01; 
+      modelRef.current.rotation.y += 0.01; // Adjust rotation speed as needed
     }
   });
-  
-  return <primitive ref={modelRef} object={fbx} scale={[0.04, 0.04, 0.04]} position={[0, -2, 0]} />;
+  return <primitive  ref={modelRef} object={fbx} scale={[0.04, 0.04, 0.04]} position={[0, -2, 0]} />;
 };
