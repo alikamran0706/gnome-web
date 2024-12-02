@@ -66,7 +66,7 @@ const AboutUs = () => {
         <div className="flex flex-col items-center justify-center h-1/2">
           <p
             ref={textRef}
-            className="text-xl w-full pt-12 md:pt-0 md:w-1/2 font-poppins tracking-widest"
+            className="text-xl w-full pt-12 lg:pt-0 lg:w-1/2 font-poppins tracking-widest"
           >
             {/* Empty text initially, GSAP will animate the typing effect */}
           </p>
