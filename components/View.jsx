@@ -337,5 +337,6 @@ const Box = ({ meshConfig }) => {
       modelRef.current.rotation.y += 0.01; 
     }
   });
+  
   return <primitive ref={modelRef} object={fbx} scale={[0.04, 0.04, 0.04]} position={[0, -2, 0]} />;
 };
