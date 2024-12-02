@@ -137,7 +137,7 @@ export default function Home() {
                 {/* Main Content */}
                 <div className="text-center">
                     <h1
-                        className="text-6xl md:text-8xl font-extrabold mb-4 tracking-wide cursor-pointer"
+                        className="text-5xl md:text-8xl font-extrabold mb-4 tracking-wide cursor-pointer"
                         ref={textRef}
                     >
                         {"GnomeVille".split("").map((char, index) => (
@@ -174,12 +174,12 @@ export default function Home() {
                             const linkContent = (
                                 <div
                                     ref={(el) => (collapseRef.current[index] = el)}
-                                    className="border-t border-gray-300 overflow-hidden cursor-pointer"
+                                    className="border-t border-gray-300 overflow-hidden cursor-pointer py-4"
                                     onMouseEnter={() => handleMouseEnter(index)}
                                     onMouseLeave={() => handleMouseLeave(index)}
                                 >
                                     <h2
-                                        className={`text-7xl font-bold ${activeIndex === index ? "text-[#6ee7b7]" : "text-white"
+                                        className={`text-5xl md:text-7xl font-bold ${activeIndex === index ? "text-[#6ee7b7]" : "text-white"
                                             }`}
                                     >
                                         {section.title}
